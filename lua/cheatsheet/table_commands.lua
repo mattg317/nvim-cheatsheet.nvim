@@ -1,10 +1,16 @@
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
+local default_config = require("cheatsheet.config.display_table")
 -- local contents = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
--- local contents = "/users/mgiordanella/Main/10_Coding/10_Nvim/key_cheatsheet.nvim/lua/nui_cheatsheet_2/files/cheat-sheet.txt"
-local contents = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt"
+local contents = "/users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
+-- local contents = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt"
 
 local M = {}
+-- local config = {}
+
+function M.setup(opts)
+    M.config = vim.tbl_deep_extend("force", default_config, opts or {})
+end
 
 function M.create_cheatsheet_file(content_file)
     print("The cheatsheet file does not exist.")
@@ -61,25 +67,9 @@ function M.save_table(new_table)
 end
 
 --- Display Table
+--- TODO: opts can get passed in here
 function M.display_table()
-    local popup = Popup({
-        enter = true,
-        focusable = true,
-        border = {
-            style = "rounded",
-            text = {
-                top = "CHEAT SHEET",
-            }
-        },
-        position = "50%",
-        size = {
-            width = "40%",
-            height = "40%",
-        },
-        win_options = {
-            winhighlight = "Normal:MiniIconsPurple"
-        }
-    })
+    local popup = Popup(M.config.display_table)
 
     -- mount/open the component
     popup:mount()
@@ -120,5 +110,5 @@ function M.delete_from_table(num_to_delete)
     end
 end
 
--- M.display_table()
+
 return M
