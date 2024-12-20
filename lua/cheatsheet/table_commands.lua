@@ -1,16 +1,30 @@
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
-local contents = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
--- local contents = "/home/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/files/cheat-sheet.txt"
--- local contents = vim.fn.stdpath('data') .. "/cheat_test/test.txt"
+-- local contents = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
+-- local contents = "/users/mgiordanella/Main/10_Coding/10_Nvim/key_cheatsheet.nvim/lua/nui_cheatsheet_2/files/cheat-sheet.txt"
+local contents = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt"
 
 local M = {}
+
+function M.create_cheatsheet_file(content_file)
+    print("The cheatsheet file does not exist.")
+    local create_sheet = vim.fn.input("Would you like to create one? [y/n]")
+    if create_sheet == 'y'
+    then
+        print("\nCreateing new file in " .. content_file)
+        local file, err = io.open(content_file, 'w')
+        if file == nil then print("Error creating file: " .. err) else file:close() end
+    else
+        print("\nQuitting")
+    end
+end
 
 function M.read_table()
     local table_c = {}
     local file, err = io.open(contents, "r")
     if file == nil then
         print("Couldn't open file: " .. err)
+        M.create_cheatsheet_file(contents)
     else
         for line in file:lines() do
             table.insert(table_c, line)
@@ -19,6 +33,7 @@ function M.read_table()
     end
     return table_c
 end
+
 
 function M.table_length(table_c)
     local count = 0
@@ -45,7 +60,6 @@ function M.save_table(new_table)
     end
 end
 
-
 --- Display Table
 function M.display_table()
     local popup = Popup({
@@ -53,7 +67,7 @@ function M.display_table()
         focusable = true,
         border = {
             style = "rounded",
-            text =  {
+            text = {
                 top = "CHEAT SHEET",
             }
         },
@@ -94,12 +108,11 @@ function M.write_table(note_to_add)
     M.save_table(main_table)
 end
 
-
 function M.delete_from_table(num_to_delete)
     local main_table = M.read_table()
     local table_length = M.table_length(main_table)
     if tonumber(num_to_delete) > 0 and tonumber(num_to_delete) <= table_length then
-        print("Deleting command " .. num_to_delete)
+        print("Deleting command > " .. main_table[num_to_delete])
         table.remove(main_table, num_to_delete)
         M.save_table(main_table)
     else
@@ -107,5 +120,5 @@ function M.delete_from_table(num_to_delete)
     end
 end
 
-M.display_table()
+-- M.display_table()
 return M

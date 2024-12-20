@@ -1,4 +1,4 @@
-local commands = require "cheatsheet.nvim_commands"
+local commands = require "cheatsheet.commands"
 
 local M = {}
 
