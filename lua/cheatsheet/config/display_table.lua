@@ -1,4 +1,12 @@
 local default = {
+    -- contents_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
+    -- content_file_path = "",
+    -- contents_file_name = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt",
+    -- file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/",
+    file_name = "cheat-sheet.txt",
+    file_dir = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
+
+    -- contents_file = true,
     display_table = {
         enter = true,
         focusable = true,

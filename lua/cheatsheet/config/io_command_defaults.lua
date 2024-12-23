@@ -1,15 +1,4 @@
 local table_command = require("cheatsheet.table_commands")
-local Menu = require("nui.menu")
-
-local table_menu = function()
-    local tm = table_command.read_table()
-    local test_table = {}
-    for index, value in ipairs(tm) do
-        local data = { id = index }
-        table.insert(test_table, Menu.item(value, data))
-    end
-    return test_table
-end
 
 local io_commands_defaults = {
     add_config = {
@@ -70,7 +59,7 @@ local io_commands_defaults = {
             },
         },
         menu_input = {
-            lines = table_menu(),
+            -- lines = table_menu(),
             max_width = 20,
             keymap = {
                 focus_next = { "j", "<Down>", "<Tab>" },
