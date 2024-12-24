@@ -1,11 +1,6 @@
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
 local default_config = require("cheatsheet.config.display_table")
--- local contents = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
--- local contents = "/users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
--- local contents = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt"
--- local contents_dir_name = vim.fn.stdpath('data') .. "/nvim-cheatsheet/"
--- local contents_file_name = "cheatsheet.txt"
 
 local M = {}
 -- local config = {}
