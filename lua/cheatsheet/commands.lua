@@ -13,7 +13,7 @@ local CMDS = {
         },
         command = function()
             -- add the check for if the file exists here possibly
-            table_control.display_table()
+            table_control.display_table('none')
         end,
     },
     {
@@ -35,6 +35,18 @@ local CMDS = {
         command = function()
             input_control.delete_command()
         end
+    },
+    {
+        name = "ReadTodo",
+        opts = {
+            desc = "Display todo list",
+            bar = true,
+        },
+        command = function()
+            -- add the check for if the file exists here possibly
+            print("REading todo")
+            table_control.display_table('todo')
+        end,
     },
 
 }

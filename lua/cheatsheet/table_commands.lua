@@ -34,9 +34,17 @@ function M.create_cheatsheet_file(contents_dir, content_file)
     end
 end
 
-function M.read_table()
+-- This will need to change base on file type
+-- TODO: add argument
+function M.read_table(file_type)
+    -- TODO: i dont thin we need to change the content file, just use what we want concatenated
+    local read_file = M.config.contents_file
+    if file_type == 'todo' then
+        read_file = M.config.file_dir .. M.config.todo_file
+    end
     local table_c = {}
-    local file, err = io.open(M.config.contents_file, "r")
+    -- local file, err = io.open(M.config.contents_file, "r")
+    local file, err = io.open(read_file, "r")
     if file == nil then
         print("Couldn't open file: " .. err)
     else
@@ -58,6 +66,7 @@ function M.table_length(table_c)
 end
 
 function M.save_table(new_table)
+    -- TODO: this needed to be udpated as well
     local file, err = io.open(M.config.contents_file, "w")
     if file == nil then
         print("Couldn't open file: " .. err)
@@ -74,8 +83,8 @@ function M.save_table(new_table)
 end
 
 --- Display Table
---- TODO: opts can get passed in here
-function M.display_table()
+--- TODO: opts can get passed in here for what table to display
+function M.display_table(file_type)
     local popup = Popup(M.config.display_table)
 
     -- mount/open the component
@@ -87,9 +96,10 @@ function M.display_table()
     end)
     -- set content
     local display_table = {}
-    for num, item in ipairs(M.read_table()) do
-        local cheat_cmd = num .. " - " .. item
-        table.insert(display_table, cheat_cmd)
+    -- TODO: add argument to read table here as well
+    for _, item in ipairs(M.read_table(file_type)) do
+        -- local cheat_cmd = num .. " - " .. item
+        table.insert(display_table, item)
     end
     vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, display_table)
 
@@ -117,4 +127,5 @@ function M.delete_from_table(num_to_delete)
     end
 end
 
+-- M.display_table('todo')
 return M
