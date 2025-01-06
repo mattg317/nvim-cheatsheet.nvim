@@ -41,15 +41,15 @@ local checkbox = {
 
 local M = {}
 
--- M.toggle = function()
--- 	local bufnr = vim.api.nvim_buf_get_number(0)
--- 	local cursor = vim.api.nvim_win_get_cursor(0)
--- 	local start_line = cursor[1] - 1
--- 	local current_line = vim.api.nvim_buf_get_lines(bufnr, start_line, start_line + 1, false)[1] or ""
+M.toggle = function()
+	local bufnr = vim.api.nvim_buf_get_number(0)
+	local cursor = vim.api.nvim_win_get_cursor(0)
+	local start_line = cursor[1] - 1
+	local current_line = vim.api.nvim_buf_get_lines(bufnr, start_line, start_line + 1, false)[1] or ""
 --
 -- 	-- If the line contains a checked checkbox then uncheck it.
 -- 	-- Otherwise, if it contains an unchecked checkbox, check it.
-function M.toggle(bufnr, current_line)
+-- function M.toggle(bufnr, current_line)
 	-- local cursor = vim.api.nvim_win_get_cursor(0)
 	local start_line = cursor[1] - 1
 
