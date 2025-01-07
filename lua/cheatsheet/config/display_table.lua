@@ -5,8 +5,8 @@ local default = {
     -- file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/",
     file_name = "cheat-sheet.txt",
     todo_file = "todo-list.md",
-    -- file_dir = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
-    file_dir = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
+    file_dir = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
+    -- file_dir = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
 
     -- contents_file = true,
     display_table = {

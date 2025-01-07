@@ -1,5 +1,4 @@
-local table_control = require("cheatsheet.table_commands")
-local input_control = require("cheatsheet.io_commands")
+local input_control = require("cheatsheet-v2.input_commands")
 local cheat_sheet_table = require("cheatsheet-v2.display_commands")
 local todo_table = require("cheatsheet-v2.todo_display")
 
@@ -15,7 +14,8 @@ local CMDS = {
         },
         command = function()
             -- add the check for if the file exists here possibly
-            table_control.display_table('none')
+            -- table_control.display_table('none')
+            cheat_sheet_table.display_cheat_sheet()
         end,
     },
     {
@@ -47,7 +47,8 @@ local CMDS = {
         command = function()
             -- add the check for if the file exists here possibly
             print("REading todo")
-            table_control.display_table('todo')
+            -- table_control.display_table('todo')
+            todo_table.toggle_todo_display()
         end,
     },
 

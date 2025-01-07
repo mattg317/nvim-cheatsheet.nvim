@@ -1,7 +1,8 @@
 local file_command = require("cheatsheet-v2.file_commands")
 local utils = require("cheatsheet.utils")
 
-local read_file = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
+-- local read_file = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
+local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
 
 local M = {}
 local checked_character = "x"
@@ -46,7 +47,7 @@ local checkbox = {
 }
 
 
-function M.display_win()
+function M.toggle_todo_display()
     -- WE want to view this file as is, it doesn't need to be drawn onto the buffer
     local max_line = 1
 
@@ -129,5 +130,5 @@ function M.display_win()
     vim.keymap.set("n", "x", toggle, { buffer = bufnr })
 end
 
-M.display_win()
+-- M.toggle_todo_display()
 return M

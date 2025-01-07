@@ -1,6 +1,5 @@
 %s/foo/bar/g - Find and replace all
 >ap - shift entire paragraph
-<C-V> - Open in vertical split
 noh - remove search highlight
 ]m - move to method
 <leader>do - diagnostics

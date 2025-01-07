@@ -1,4 +1,4 @@
-local file_commands = require('cheatsheet.file_commands')
+local file_commands = require('cheatsheet-v2.file_commands')
 local utils = require("cheatsheet.utils")
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
@@ -14,7 +14,8 @@ M.config = {
     todo_file = "todo-list.md",
     -- file_dir = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
     file_dir = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
-    file_path = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
+    -- file_path = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
+file_path = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
     file_todo = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md",
 
     -- contents_file = true,
@@ -38,30 +39,11 @@ M.config = {
         --     winhighlight = "Normal:MiniIconsPurple"
         -- }
     },
-
-    todo_list = {
-        enter = true,
-        focusable = true,
-        border = {
-            style = "rounded",
-            text = {
-                top = "TODO List",
-            }
-        },
-        position = "50%",
-        size = {
-            width = "40%",
-            height = "40%",
-        },
-        -- win_options = {
-        --     winhighlight = "Normal:MiniIconsPurple"
-        -- }
-    }
 }
 
 
-function M.display_cheat_sheet(read_file)
-    local popup = Popup(M.config.display_table)
+function M.display_cheat_sheet()
+    local popup = Popup(M.config.cheat_sheet)
 
     -- mount/open the component
     popup:mount()
@@ -75,7 +57,7 @@ function M.display_cheat_sheet(read_file)
     local highlights = {}
 
 
-    for _, item in ipairs(file_commands.read_table(read_file)) do
+    for _, item in ipairs(file_commands.read_table(M.config.file_path)) do
         local start = 1
         -- Split the text for command and desc
         local one, two = item:match("([^,]+)-([^,]+)")
@@ -107,32 +89,7 @@ function M.display_cheat_sheet(read_file)
     end, { noremap = true })
 end
 
-function M.display_todo_list(read_file)
 
-    local popup = Popup(M.config.display_table)
-
-    -- mount/open the component
-    popup:mount()
-
-    -- unmount component when cursor leaves buffer
-    popup:on(event.BufLeave, function()
-        popup:unmount()
-    end)
-    -- set content
-    local display_table = {}
-    -- TODO: add argument to read table here as well
-    for _, item in ipairs(file_commands.read_table(read_file)) do
-        -- local cheat_cmd = num .. " - " .. item
-        table.insert(display_table, item)
-    end
-    vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, display_table)
-
-    local ok = popup:map("n", "q", function(bufnr)
-        popup:unmount()
-    end, { noremap = true })
-end
-
--- M.display_cheat_sheet(M.config.file_path)
--- M.display_todo_list(M.config.file_todo)
+-- M.display_cheat_sheet()
 
 return M

@@ -1,7 +1,8 @@
-local file_command = require("cheatsheet.file_commands")
-local utils = require("cheatsheet.utils")
+local file_command = require("cheatsheet-v2.file_commands")
+local utils = require("cheatsheet-v2.utils")
 
-local read_file = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
+-- local read_file = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
+local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
 
 local M = {}
 local checked_character = "x"
@@ -83,7 +84,7 @@ function M.display_win()
         border = "rounded",
     })
     -- Wipe buffer when it gets hidden
-    vim.api.nvim_set_option_value('bufhidden', 'wipe', {buf = bufnr})
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })
     -- Edit the file thats in the buffer
     vim.api.nvim_buf_call(bufnr, vim.cmd.edit)
 

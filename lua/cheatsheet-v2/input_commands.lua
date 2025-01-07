@@ -3,7 +3,8 @@ local event = require("nui.utils.autocmd").event
 local file_command = require("cheatsheet-v2.file_commands")
 local Menu = require("nui.menu")
 
-local read_file =  "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
+-- local read_file =  "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
+local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
 
 local M = {}
 M.config  = {
@@ -130,5 +131,5 @@ function M.delete_command()
     end, { noremap = true })
 end
 
-M.delete_command()
+-- M.delete_command()
 return M
