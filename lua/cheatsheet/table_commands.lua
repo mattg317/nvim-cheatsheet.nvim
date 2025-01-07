@@ -126,6 +126,6 @@ function M.delete_from_table(num_to_delete)
         print("Not a Valid Number")
     end
 end
-
--- M.display_table('todo')
+-- M.setup()
+-- M.display_table('nothing')
 return M

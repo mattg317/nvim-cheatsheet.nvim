@@ -2,44 +2,20 @@ local file_commands = require('cheatsheet-v2.file_commands')
 local utils = require("cheatsheet.utils")
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
+local default_cs_config = require("cheatsheet-v2.config.cheetsheet-config")
 
 local M = {}
 
-M.config = {
-    -- contents_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
-    -- content_file_path = "",
-    -- contents_file_name = vim.fn.stdpath('data') .. "/nvim-cheatsheet/cheatsheet.txt",
-    -- file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/",
-    file_name = "cheat-sheet.txt",
-    todo_file = "todo-list.md",
-    -- file_dir = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
-    file_dir = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/",
-    -- file_path = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
-file_path = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt",
-    file_todo = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md",
+function M.setup(opts)
+    M.config = vim.tbl_deep_extend("force", default_cs_config, opts or {})
+    M.config.contents_file = M.config.file_dir .. M.config.file_name
+    -- local file, err = io.open(M.config.contents_file, "r")
+    -- if file == nil then
+    --     print("Couldn't open file: " .. err)
+    --     M.create_cheatsheet_file(M.config.file_dir, M.config.file_name)
+    -- end
+end
 
-    -- contents_file = true,
-    cheat_sheet = {
-        enter = true,
-        focusable = true,
-        border = {
-            style = "rounded",
-            text = {
-                -- top = "CHEAT SHEET",
-                -- This would check changed for note type cheat sheet, todo, notes
-                top = "CHEAT SHEET",
-            }
-        },
-        position = "50%",
-        size = {
-            width = "40%",
-            height = "40%",
-        },
-        -- win_options = {
-        --     winhighlight = "Normal:MiniIconsPurple"
-        -- }
-    },
-}
 
 
 function M.display_cheat_sheet()
@@ -57,7 +33,8 @@ function M.display_cheat_sheet()
     local highlights = {}
 
 
-    for _, item in ipairs(file_commands.read_table(M.config.file_path)) do
+    -- for _, item in ipairs(file_commands.read_table(M.config.file_path)) do
+    for _, item in ipairs(file_commands.read_table(M.config.contents_file)) do
         local start = 1
         -- Split the text for command and desc
         local one, two = item:match("([^,]+)-([^,]+)")
@@ -89,7 +66,7 @@ function M.display_cheat_sheet()
     end, { noremap = true })
 end
 
-
+-- M.setup()
 -- M.display_cheat_sheet()
 
 return M

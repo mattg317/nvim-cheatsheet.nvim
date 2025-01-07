@@ -1,76 +1,35 @@
 local file_command = require("cheatsheet-v2.file_commands")
-local utils = require("cheatsheet.utils")
-
--- local read_file = "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
-local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/todo-list.md"
+local utils = require("cheatsheet-v2.utils")
+local toggle = require("cheatsheet-v2.toggle")
+local default_td_config = require("cheatsheet-v2.config.todo-config")
 
 local M = {}
-local checked_character = "x"
 
-local checked_checkbox = "%[" .. checked_character .. "%]"
-local unchecked_checkbox = "%[ %]"
 
-local line_contains_unchecked = function(line)
-    return line:find(unchecked_checkbox)
+function M.setup(opts)
+    M.config = vim.tbl_deep_extend("force", default_td_config, opts or {})
+    M.config.contents_file = M.config.file_dir .. M.config.todo_file
+    -- local file, err = io.open(M.config.contents_file, "r")
+    -- if file == nil then
+    --     print("Couldn't open file: " .. err)
+    --     M.create_cheatsheet_file(M.config.file_dir, M.config.file_name)
+    -- end
 end
-
-local line_contains_checked = function(line)
-    return line:find(checked_checkbox)
-end
-
-local line_with_checkbox = function(line)
-    -- return not line_contains_a_checked_checkbox(line) and not line_contains_an_unchecked_checkbox(line)
-    return line:find("^%s*- " .. checked_checkbox)
-        or line:find("^%s*- " .. unchecked_checkbox)
-        or line:find("^%s*%d%. " .. checked_checkbox)
-        or line:find("^%s*%d%. " .. unchecked_checkbox)
-end
-
-local checkbox = {
-    check = function(line)
-        return line:gsub(unchecked_checkbox, checked_checkbox, 1)
-    end,
-
-    uncheck = function(line)
-        return line:gsub(checked_checkbox, unchecked_checkbox, 1)
-    end,
-
-    make_checkbox = function(line)
-        if not line:match("^%s*-%s.*$") and not line:match("^%s*%d%s.*$") then
-            -- "xxx" -> "- [ ] xxx"
-            return line:gsub("(%S+)", "- [ ] %1", 1)
-        else
-            -- "- xxx" -> "- [ ] xxx", "3. xxx" -> "3. [ ] xxx"
-            return line:gsub("(%s*- )(.*)", "%1[ ] %2", 1):gsub("(%s*%d%. )(.*)", "%1[ ] %2", 1)
-        end
-    end,
-}
-
 
 function M.toggle_todo_display()
-    -- WE want to view this file as is, it doesn't need to be drawn onto the buffer
     local max_line = 1
 
-    local tm = file_command.read_table(read_file)
+    -- local tm = file_command.read_table(read_file)
+    local tm = file_command.read_table(M.config.contents_file)
     local lines = {}
     for _, value in ipairs(tm) do
         max_line = math.max(max_line, vim.api.nvim_strwidth(value))
         table.insert(lines, value)
     end
 
-    -- along this reasoning, need to create the buf from a file and delete when it leaves each time
-    -- might also was to start with a check that that buffer isn't curren't open as well w
-    -- local bufnr = vim.api.nvim_create_buf(false, false)
-    -- vim.api.nvim_buf_call(bufnr, vim.cmd.edit)
-    -- vim.api.nvim_set_option_value('bufhidden', 'wipe')
-    -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, lines)
-    -- vim.api.nvim_buf_set_name(bufnr, 'test-todo')
-    -- this has been replaced with vim.api.nvim_set_option_value
-    -- vim.api.nvim_buf_set_option(bufnr, "bufhidden", "wipe")
-
     -- Create the buffer and use the file as the buffer name
     local bufnr = vim.api.nvim_create_buf(true, false)
-    vim.api.nvim_buf_set_name(bufnr, read_file)
+    vim.api.nvim_buf_set_name(bufnr, M.config.contents_file)
 
     local editor_width = vim.o.columns
     local editor_height = utils.get_editor_height()
@@ -107,28 +66,9 @@ function M.toggle_todo_display()
         nested = true,
     })
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = bufnr })
-    local function toggle()
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local start_line = cursor[1] - 1
-        local current_line = vim.api.nvim_buf_get_lines(bufnr, start_line, start_line + 1, false)[1] or ""
-
-        local new_line = ""
-        if not line_with_checkbox(current_line) then
-            print("not line with check")
-            new_line = checkbox.make_checkbox(current_line)
-        elseif line_contains_unchecked(current_line) then
-            print("line with uncheck")
-            new_line = checkbox.check(current_line)
-        elseif line_contains_checked(current_line) then
-            print("line with check")
-            new_line = checkbox.uncheck(current_line)
-        end
-
-        vim.api.nvim_buf_set_lines(bufnr, start_line, start_line + 1, false, { new_line })
-    end
-    -- will need to set something here for toggleing it
-    vim.keymap.set("n", "x", toggle, { buffer = bufnr })
+    -- This is still in progress because of needing to save it
+    vim.keymap.set("n", "x", toggle.toggle, { buffer = bufnr })
 end
-
+-- M.setup()
 -- M.toggle_todo_display()
 return M
