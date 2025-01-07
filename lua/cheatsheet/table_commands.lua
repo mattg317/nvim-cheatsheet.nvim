@@ -1,4 +1,5 @@
 local Popup = require("nui.popup")
+local Menu = require("nui.menu")
 local event = require("nui.utils.autocmd").event
 local default_config = require("cheatsheet.config.display_table")
 
@@ -115,6 +116,29 @@ function M.delete_from_table(num_to_delete)
     else
         print("Not a Valid Number")
     end
+end
+
+function M.change_file()
+    local file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/"
+    local dirs = vim.fs.dir(file_dir)
+    local test_table = {}
+    for value, _ in dirs do
+        table.insert(test_table, Menu.item(value))
+    end
+
+    M.config.file_picker.menu_input.lines = test_table
+    M.config.file_picker.menu_input.on_submit = function(item)
+        -- Here is where I need to swtich the view
+        local new_file = file_dir .. item.text
+        M.config.contents_file = new_file
+        print("Menu Submitted: ", item.text)
+        print("You select the file in - " .. new_file)
+    end
+    local menu = Menu(M.config.file_picker.menu, M.config.file_picker.menu_input)
+    -- local menu = Menu({
+
+    -- mount the component
+    menu:mount()
 end
 
 return M

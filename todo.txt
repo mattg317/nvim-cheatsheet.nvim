@@ -1,0 +1,17 @@
+TODO
+----
+- Some code clean up
+    - add params
+    - varible re naming
+- Update readme and documentation
+- What about re purposeing it to something that many list. For example
+    - can quickly pull up a todo list
+    - a cheat sheet
+    - project notes
+
+- So need to figure out how to package it
+    - but file picker should change the file name used in the table commands config
+    - so can create it as it's own function then somewhere in table commands it gets called
+    -WORKING!
+
+- Is it better to just have all the configurtion opts in one file w

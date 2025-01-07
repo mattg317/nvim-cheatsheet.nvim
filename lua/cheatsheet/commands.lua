@@ -36,6 +36,18 @@ local CMDS = {
             input_control.delete_command()
         end
     },
+    {
+        -- rename this
+        name = "CScf",
+        opts = {
+            desc = "cheatsheet: change file",
+            bar = true,
+        },
+        command = function()
+            table_control.change_file()
+        end
+    },
+
 
 }
 
