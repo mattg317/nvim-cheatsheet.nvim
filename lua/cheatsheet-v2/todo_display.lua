@@ -1,13 +1,13 @@
 local file_command = require("cheatsheet-v2.file_commands")
 local utils = require("cheatsheet-v2.utils")
 local toggle = require("cheatsheet-v2.toggle")
-local default_td_config = require("cheatsheet-v2.config.todo-config")
+local default_config = require("cheatsheet-v2.config.default_config")
 
 local M = {}
 
 
 function M.setup(opts)
-    M.config = vim.tbl_deep_extend("force", default_td_config, opts or {})
+    M.config = vim.tbl_deep_extend("force", default_config, opts or {})
     M.config.contents_file = M.config.file_dir .. M.config.todo_file
     -- local file, err = io.open(M.config.contents_file, "r")
     -- if file == nil then

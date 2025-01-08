@@ -42,7 +42,7 @@ function M.save_table(read_file, new_table)
 end
 
 function M.write_table(read_file, note_to_add)
-    local main_table = M.read_table()
+    local main_table = M.read_table(read_file)
     table.insert(main_table, note_to_add)
     M.save_table(read_file, main_table)
 end

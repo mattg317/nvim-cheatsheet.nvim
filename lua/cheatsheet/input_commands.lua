@@ -130,5 +130,5 @@ function M.delete_command()
     end, { noremap = true })
 end
 
-M.delete_command()
+-- M.delete_command()
 return M

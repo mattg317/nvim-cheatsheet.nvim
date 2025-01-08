@@ -16,7 +16,8 @@ local CMDS = {
         command = function()
             -- add the check for if the file exists here possibly
             -- table_control.display_table('none')
-            cheat_sheet_table.display_cheat_sheet()
+            -- cheat_sheet_table.display_cheat_sheet()
+            require("cheatsheet-v2.display_cheatsheet").display_cheat_sheet()
         end,
     },
     {

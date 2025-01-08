@@ -6,9 +6,14 @@ local M = {}
 
 function M.setup(opts)
     -- Probably want to check for file here maybe? or check tjs video about waiting for lazy to call it
+    -- yeah best to check for file here maybe have it in it's own module, that i need to figure out how to lazy load
+    -- the plugin
     display_cheatsheet.setup(opts)
     display_todo.setup(opts)
-    commands.setup()
+    -- commands.setup()
 end
 
+    vim.api.nvim_create_user_command("CheatSheetToggle", function ()
+            require("cheatsheet-v2.display_cheatsheet").display_cheat_sheet()
+    end, {})
 return M

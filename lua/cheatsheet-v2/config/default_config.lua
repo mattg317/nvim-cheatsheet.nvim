@@ -12,7 +12,8 @@ local default = {
 
     -- final version
     file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/",
-    cheat_sheet_file = "cheat-sheet.txt",
+    -- cheat_sheet_file = "cheat-sheet.txt",
+    cheat_sheet_file = "cheatsheet.txt",
     todo_file = "todo-list.md",
 
 

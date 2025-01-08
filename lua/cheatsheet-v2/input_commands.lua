@@ -2,36 +2,18 @@ local Input = require("nui.input")
 local event = require("nui.utils.autocmd").event
 local file_command = require("cheatsheet-v2.file_commands")
 local Menu = require("nui.menu")
+local default_config = require("cheatsheet-v2.config.input_default_config")
 
 -- local read_file =  "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
-local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
+-- local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
 
 local M = {}
-M.config  = {
-    add_config = {
-        input_config_style = {
-            position = "50%",
-            size = {
-                width = 30,
-            },
-            border = {
-                style = "single",
-                text = {
-                    top = "Enter Command >",
-                    top_align = "center",
-                },
-            },
-            win_options = {
-                winhighlight = "Normal:Normal,FloatBorder:Normal",
-            },
-        },
-        input_config_prompt = {
-            prompt = "> ",
-            -- default_value = greeting,
-            on_close = function()
-                print("Input Closed!")
-            end,
-            on_submit = function(value)
+
+function M.setup(opts)
+    M.config = vim.tbl_deep_extend("force", default_config, opts or {})
+    M.config.contents_file = M.config.file_dir .. M.config.cheat_sheet_file
+
+    M.config.add_config.input_config_prompt.on_submit =  function(value)
                 -- Replaces command_add
                 local note_to_add = value .. "\n"
 
@@ -41,43 +23,12 @@ M.config  = {
                     print("Not a command")
                 else
                     -- Finally add to table
-                    file_command.write_table(read_file, note_to_add)
+                    file_command.write_table(M.config.contents_file, note_to_add)
                     print("Command added to cheat sheet: " .. value)
                 end
-            end,
-        }
-    },
-    delete_config = {
-        menu = {
-            position = "50%",
-            size = {
-                width = "40%",
-                height = "40%",
-            },
-            border = {
-                style = "single",
-                text = {
-                    top = "Select a note to delete",
-                    top_align = "center",
-                },
-            },
-            win_options = {
-                winhighlight = "Normal:Normal,FloatBorder:Normal",
-            },
-        },
-        menu_input = {
-            -- lines = table_menu(),
-            max_width = 20,
-            keymap = {
-                focus_next = { "j", "<Down>", "<Tab>" },
-                focus_prev = { "k", "<Up>", "<S-Tab>" },
-                close = { "<Esc>", "<C-c>" },
-                submit = { "<CR>", "<Space>" },
-            },
-            on_close = function()
-                print("Menu Closed!")
-            end,
-            on_submit = function(item)
+            end
+
+    M.config.delete_config.menu_input.on_submit = function(item)
                 local confirm_delete = vim.fn.input("Are you sure you want to delete note "
                     .. item.text .. "? - y/n ")
                 print("Menu Submitted: ", item.text)
@@ -85,15 +36,14 @@ M.config  = {
                 if confirm_delete == 'y'
                 then
                     vim.cmd('redraw')
-                    file_command.delete_from_table(read_file, item._id)
+                    file_command.delete_from_table(M.config.contents_file, item._id)
                 else
                     vim.cmd('redraw')
                     print("Not deleting " .. item.text)
                 end
-            end,
-        }
-    }
-}
+            end
+
+end
 
 function M.add_command()
     -- nui function here
@@ -111,7 +61,7 @@ end
 
 function M.delete_command()
     local table_menu = function()
-        local tm = file_command.read_table(read_file)
+        local tm = file_command.read_table(M.config.contents_file)
         local test_table = {}
         for index, value in ipairs(tm) do
             local data = { id = index }
@@ -131,5 +81,7 @@ function M.delete_command()
     end, { noremap = true })
 end
 
+-- M.setup()
 -- M.delete_command()
+-- M.add_command()
 return M
