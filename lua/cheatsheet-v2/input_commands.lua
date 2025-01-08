@@ -4,8 +4,6 @@ local file_command = require("cheatsheet-v2.file_commands")
 local Menu = require("nui.menu")
 local default_config = require("cheatsheet-v2.config.input_default_config")
 
--- local read_file =  "/Users/mgiordanella/Main/10_Coding/10_Nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
--- local read_file = "/home/matthewgiordanella/Main/30-39_Coding/nvim/nvim-cheatsheet.nvim/lua/cheatsheet/file/cheat-sheet.txt"
 
 local M = {}
 
@@ -46,7 +44,6 @@ function M.setup(opts)
 end
 
 function M.add_command()
-    -- nui function here
     local input = Input(
     M.config.add_config.input_config_style,
     M.config.add_config.input_config_prompt
@@ -81,7 +78,4 @@ function M.delete_command()
     end, { noremap = true })
 end
 
--- M.setup()
--- M.delete_command()
--- M.add_command()
 return M

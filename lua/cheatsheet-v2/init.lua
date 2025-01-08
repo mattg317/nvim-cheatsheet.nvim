@@ -1,19 +1,14 @@
-local commands = require("cheatsheet-v2.commands")
-local display_cheatsheet = require("cheatsheet-v2.display_cheatsheet")
+local display_cheatsheet = require("cheatsheet-v2.cheatsheet_display")
 local display_todo = require("cheatsheet-v2.todo_display")
+local input_commands = require("cheatsheet-v2.input_commands")
 
 local M = {}
 
 function M.setup(opts)
-    -- Probably want to check for file here maybe? or check tjs video about waiting for lazy to call it
-    -- yeah best to check for file here maybe have it in it's own module, that i need to figure out how to lazy load
-    -- the plugin
     display_cheatsheet.setup(opts)
     display_todo.setup(opts)
-    -- commands.setup()
+    input_commands.setup(opts)
+
 end
 
-    vim.api.nvim_create_user_command("CheatSheetToggle", function ()
-            require("cheatsheet-v2.display_cheatsheet").display_cheat_sheet()
-    end, {})
 return M

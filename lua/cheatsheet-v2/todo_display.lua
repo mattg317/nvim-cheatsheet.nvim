@@ -9,17 +9,16 @@ local M = {}
 function M.setup(opts)
     M.config = vim.tbl_deep_extend("force", default_config, opts or {})
     M.config.contents_file = M.config.file_dir .. M.config.todo_file
-    -- local file, err = io.open(M.config.contents_file, "r")
-    -- if file == nil then
-    --     print("Couldn't open file: " .. err)
-    --     M.create_cheatsheet_file(M.config.file_dir, M.config.file_name)
-    -- end
+    local file, err = io.open(M.config.contents_file, "r")
+    if file == nil then
+        print("\nCouldn't open " .. M.config.todo_file .. " " .. err)
+        utils.create_cheatsheet_file(M.config.file_dir, M.config.todo_file)
+    end
 end
 
 function M.toggle_todo_display()
     local max_line = 1
 
-    -- local tm = file_command.read_table(read_file)
     local tm = file_command.read_table(M.config.contents_file)
     local lines = {}
     for _, value in ipairs(tm) do
@@ -41,17 +40,18 @@ function M.toggle_todo_display()
         height = math.min(editor_height, #lines),
         zindex = 150,
         border = "rounded",
+        title = "TODO List",
+        title_pos = "center",
     })
     -- Wipe buffer when it gets hidden
-    vim.api.nvim_set_option_value('bufhidden', 'wipe', {buf = bufnr})
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })
+    vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal', {})
     -- Edit the file thats in the buffer
     vim.api.nvim_buf_call(bufnr, vim.cmd.edit)
 
     local function close()
         if vim.api.nvim_win_is_valid(winid) then
-            -- try running save table here
             vim.api.nvim_win_close(winid, true)
-            -- vim.api.nvim_buf_delete(bufnr, { force = true})
         end
     end
     vim.api.nvim_create_autocmd("BufLeave", {
@@ -69,6 +69,5 @@ function M.toggle_todo_display()
     -- This is still in progress because of needing to save it
     vim.keymap.set("n", "x", toggle.toggle, { buffer = bufnr })
 end
--- M.setup()
--- M.toggle_todo_display()
+
 return M

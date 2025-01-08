@@ -1,6 +1,6 @@
 local input_control = require("cheatsheet-v2.input_commands")
-local cheat_sheet_table = require("cheatsheet-v2.display_cheatsheet")
-local display_cheatsheet = require("cheatsheet-v2.display_cheatsheet")
+local cheat_sheet_table = require("cheatsheet-v2.cheatsheet_display")
+local display_cheatsheet = require("cheatsheet-v2.cheatsheet_display")
 local display_todo = require("cheatsheet-v2.todo_display")
 
 local M = {}
@@ -17,7 +17,7 @@ local CMDS = {
             -- add the check for if the file exists here possibly
             -- table_control.display_table('none')
             -- cheat_sheet_table.display_cheat_sheet()
-            require("cheatsheet-v2.display_cheatsheet").display_cheat_sheet()
+            require("cheatsheet-v2.cheatsheet_display").display_cheat_sheet()
         end,
     },
     {

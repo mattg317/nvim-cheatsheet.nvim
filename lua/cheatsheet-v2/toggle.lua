@@ -1,3 +1,5 @@
+-- Taken from https://github.com/opdavies/toggle-checkbox.nvim/blob/main/lua/toggle-checkbox.lua
+
 local M = {}
 local checked_character = "x"
 

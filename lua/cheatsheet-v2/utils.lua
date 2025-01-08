@@ -1,5 +1,5 @@
 local M = {}
-
+-- rpad and get_editor_height functions taken from Oil.nvim
 M.rpad = function(text, length)
     if not length then
         return text
@@ -28,4 +28,20 @@ M.get_editor_height = function()
     return editor_height
 end
 
+function M.create_cheatsheet_file(contents_dir, content_file)
+    local create_sheet = vim.fn.input("Would you like to create one? [y/n]")
+    if create_sheet == 'y'
+    then
+        local contents_file = contents_dir .. content_file
+        if vim.fn.isdirectory(contents_dir) == 0 then
+            print("\n Createing directory in " .. contents_dir .. "\n")
+            vim.fn.mkdir(contents_dir)
+        end
+        print("\nCreateing new file in " .. contents_file .. "\n")
+        local file, err = io.open(contents_file, 'w')
+        if file == nil then print("Error creating file: " .. err) else file:close() end
+    else
+        print("\nQuitting")
+    end
+end
 return M
