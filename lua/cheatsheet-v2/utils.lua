@@ -1,5 +1,10 @@
 local M = {}
 -- rpad and get_editor_height functions taken from Oil.nvim
+
+---comment
+---@param text string:
+---@param length integer
+---@return string
 M.rpad = function(text, length)
     if not length then
         return text
@@ -28,6 +33,9 @@ M.get_editor_height = function()
     return editor_height
 end
 
+---Creates new cheatsheet files if they don't already exist
+---@param contents_dir string: directory path to where the files are locate
+---@param content_file string: name of the file
 function M.create_cheatsheet_file(contents_dir, content_file)
     local create_sheet = vim.fn.input("Would you like to create one? [y/n]")
     if create_sheet == 'y'

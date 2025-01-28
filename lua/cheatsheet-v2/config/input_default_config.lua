@@ -1,6 +1,7 @@
 local default = {
     file_dir = vim.fn.stdpath('data') .. "/nvim-cheatsheet/",
     cheat_sheet_file = "cheatsheet.txt",
+    todo_file = "todo-list.md",
     add_config = {
         input_config_style = {
             position = "50%",

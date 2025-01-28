@@ -35,7 +35,7 @@ local CMDS = {
             bar = true,
         },
         command = function()
-            require("cheatsheet-v2.input_commands").add_command()
+            require("cheatsheet-v2.input_commands").add_command('cs')
         end,
     },
     {

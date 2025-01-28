@@ -1,5 +1,6 @@
 local M = {}
 
+---@param read_file string: Name of the file to read
 function M.read_table(read_file)
     local table_c = {}
     local file, err = io.open(read_file, "r")
@@ -24,6 +25,9 @@ function M.table_length(table_c)
     return count
 end
 
+
+---@param read_file string: Name of the file to read
+---@param new_table table: New table created from add or delete
 function M.save_table(read_file, new_table)
     -- TODO: this needed to be udpated as well
     local file, err = io.open(read_file, "w")
@@ -41,12 +45,16 @@ function M.save_table(read_file, new_table)
     end
 end
 
+---@param read_file string: Name of the file to read
+---@param note_to_add string: Note to be added to the file
 function M.write_table(read_file, note_to_add)
     local main_table = M.read_table(read_file)
     table.insert(main_table, note_to_add)
     M.save_table(read_file, main_table)
 end
 
+---@param read_file string: Name of the file to read
+---@param num_to_delete integer: Number of the row to be deleted
 function M.delete_from_table(read_file, num_to_delete)
     local main_table = M.read_table(read_file)
     local table_length = M.table_length(main_table)
