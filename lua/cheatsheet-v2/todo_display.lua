@@ -48,6 +48,15 @@ function M.toggle_todo_display()
     vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal', {})
     -- Edit the file thats in the buffer
     vim.api.nvim_buf_call(bufnr, vim.cmd.edit)
+    vim.api.nvim_create_autocmd("BufModifiedSet", {
+        callback = function()
+            vim.cmd('w')
+            vim.cmd('echo "saved"')
+        end,
+        -- once = true,
+        -- nested = true,
+        buffer = bufnr,
+    })
 
     local function close()
         if vim.api.nvim_win_is_valid(winid) then
@@ -68,6 +77,13 @@ function M.toggle_todo_display()
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = bufnr })
     -- This is still in progress because of needing to save it
     vim.keymap.set("n", "x", toggle.toggle, { buffer = bufnr })
+
+    -- TODO: possible add the abilit to add todo here, so hitting a in normal mode creates a new line, inserts the checkbox and starts curor after it.
+    -- look at the toggle function.
+    -- you would create a string of the of the check box template
+    -- get the cursor position
 end
 
+-- M.setup()
+-- M.toggle_todo_display()
 return M
